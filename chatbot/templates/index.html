@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>IA - Los Artificiales</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Importar fuente moderna 'Inter' */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+
+            /* --- FONDO --- */
+            /* Opción 1: Nueva imagen sugerida (Abstracto/Tech/IA - Más moderno) */
+            background-image: linear-gradient(rgba(42, 42, 163, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1718241905696-cb34c2c07bed?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+
+            /* Opción 2: Tu imagen anterior (Descomenta la línea de abajo y comenta la de arriba si prefieres esta) */
+            /* background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://www.servinform.es/wp-content/uploads/2021/10/La-tecnologia-chatbot-agilidad-y-rapidez-para-tus-clientes.jpg'); */
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Animación de entrada suave */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+
+            /* Efecto Glassmorphism (Cristal Esmerilado) */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+            /* Para posicionamiento */
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            /* Texto con gradiente */
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .user-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .logout-btn {
+            padding: 8px 20px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(to right, #f093fb 0%, #f5576c 100%);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        /* Banner de información del archivo */
+        .file-info-banner {
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.15) 0%, rgba(0, 242, 254, 0.15) 100%);
+            border-left: 4px solid #4facfe;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: none;
+            /* Oculto por defecto */
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .file-info-banner.visible {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .file-info-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .file-info-icon {
+            font-size: 24px;
+        }
+
+        .file-info-text {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .file-info-title {
+            font-weight: 600;
+            color: #4facfe;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .file-info-description {
+            color: #e0e0e0;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .file-info-meta {
+            font-size: 11px;
+            color: #a0aec0;
+            margin-top: 4px;
+        }
+
+
+        /* Panel de Control (Subida de archivos) */
+        .control-panel {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            /* Permite que los elementos bajen si no caben */
+        }
+
+        /* Área de Chat */
+        #chat {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            /* Scrollbar personalizada */
+            scrollbar-width: thin;
+            scrollbar-color: #4facfe rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos de Burbujas de Chat */
+        .message {
+            margin: 15px 0;
+            padding: 15px 20px;
+            border-radius: 18px;
+            max-width: 80%;
+            line-height: 1.6;
+            position: relative;
+            font-size: 15px;
+            animation: slideIn 0.3s ease;
+            word-wrap: break-word;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user {
+            /* Gradiente Azul/Violeta para usuario */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-left: auto;
+            /* Alinear a la derecha */
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
+            text-align: left;
+        }
+
+        .bot {
+            /* Estilo sutil para el bot */
+            background: rgba(255, 255, 255, 0.1);
+            color: #f0f0f0;
+            margin-right: auto;
+            /* Alinear a la izquierda */
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Área de Input (Footer) */
+        .input-area {
+            display: flex;
+            gap: 10px;
+            position: relative;
+        }
+
+        /* Estilos de Inputs y Botones */
+        input[type="text"],
+        select,
+        input[type="file"] {
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #4facfe;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(79, 172, 254, 0.2);
+        }
+
+        button {
+            padding: 12px 25px;
+            border-radius: 12px;
+            border: none;
+            /* Gradiente Cian/Azul brillante */
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+            /* Evita que el texto del botón se rompa */
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Estilos para Tablas Markdown */
+        .bot table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .bot th {
+            background: rgba(79, 172, 254, 0.2);
+            color: #4facfe;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .bot td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bot tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Gráficos */
+        .chart-container {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .status {
+            color: #4facfe;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        /* Highlight text */
+        strong {
+            color: #4facfe;
+        }
+
+        /* --- RESPONSIVE DESIGN (Móviles y Tablets) --- */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                height: 95vh;
+                padding: 15px;
+            }
+
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .user-info {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .control-panel {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .control-panel input[type="file"],
+            .control-panel button,
+            .control-panel select {
+                width: 100% !important;
+                /* Forzar ancho completo en móvil */
+            }
+
+            .input-area {
+                flex-direction: column;
+            }
+
+            .input-area button {
+                width: 100%;
+            }
+
+            .message {
+                max-width: 90%;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header con info de usuario -->
+        <div class="header-container">
+            <h1>IA - Los Artificiales</h1>
+            <div class="user-info">
+                <span>👤 {{ username }}</span>
+                <span class="user-badge">{{ user_type|upper }}</span>
+                <button class="logout-btn" onclick="logout()">Cerrar Sesión 🚪</button>
+            </div>
+        </div>
+
+        <!-- Panel de Control Superior -->
+        <div class="control-panel">
+            {% if user_type == 'administrador' %}
+            <!-- Administradores: Cargar archivos + selector de modo -->
+            <input type="file" id="fileInput" style="width: auto;">
+            <button onclick="uploadFile()">📂 Cargar para Análisis</button>
+            <select id="modo" style="width: auto;">
+                <option value="general">💬 Chat General</option>
+                <option value="documento">📊 Análisis de Datos</option>
+            </select>
+            <div id="uploadStatus" class="status"></div>
+            {% else %}
+            <!-- Usuarios: Selector de modo (General o Documento de Soporte) -->
+            <select id="modo" style="width: auto;">
+                <option value="general">💬 Chat General</option>
+                <option value="documento">📄 Informacion sobre la Empresa</option>
+            </select>
+            <div style="padding: 10px; background: rgba(79, 172, 254, 0.15); border-radius: 12px; flex: 1;">
+                <span style="font-size: 13px;">Puedes usar chat general o consultar informacion sobre la empresa</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Área de Chat -->
+        <div id="chat">
+            {% if user_type == 'administrador' %}
+            <div class="message bot">👋 ¡Hola <b>{{ username }}</b>! Soy el asistente de <b>Los Artificiales</b>.<br>
+                Como <b>Administrador</b>, puedes cargar archivos (PDF, CSV, TXT) para actualizar la documentación de
+                soporte.
+            </div>
+            {% else %}
+            <div class="message bot">👋 ¡Hola <b>{{ username }}</b>! Soy el asistente de <b>Los Artificiales</b>.<br>
+                Puedes usar el <b>Chat General</b> para cualquier pregunta.
+                <br>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Área de Input Inferior -->
+        <div class="input-area">
+            <input type="text" id="pregunta" placeholder="Escribe tu pregunta aquí...">
+            <button onclick="sendMessage()">Enviar 🚀</button>
+        </div>
+    </div>
+
+    <script>
+        function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            const statusDiv = document.getElementById('uploadStatus');
+            if (!file) {
+                statusDiv.innerText = 'Error: Archivo no detectado.';
+                return;
+            }
+
+            statusDiv.innerText = '⏳ Cargando...';
+
+            const formData = new FormData();
+            formData.append('file', file);
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        statusDiv.innerText = '✅ ' + data.success;
+                        console.log('Archivo cargado:', data.stats);
+                    } else {
+                        statusDiv.innerText = '❌ ' + (data.error || 'Error desconocido');
+                    }
+                })
+                .catch(error => {
+                    statusDiv.innerText = '❌ Error de conexión';
+                    console.error('Error:', error);
+                });
+        }
+
+        function sendMessage() {
+            const preguntaInput = document.getElementById('pregunta');
+            const pregunta = preguntaInput.value;
+            const modo = document.getElementById('modo').value;
+            if (!pregunta) return;
+
+            addMessage('user', pregunta);
+            preguntaInput.value = '';
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pregunta, modo })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Enviamos tanto la respuesta de texto como los datos del gráfico (si existen)
+                    addMessage('bot', data.respuesta, data.chart_data);
+                })
+                .catch(error => {
+                    console.error('Error al conectar con el servidor:', error);
+                    addMessage('bot', 'Error de conexión con el backend de IA. Revisa tu terminal de Python.');
+                });
+        }
+
+        function addMessage(sender, text, chartData = null) {
+            const chat = document.getElementById('chat');
+            const message = document.createElement('div');
+            message.className = 'message ' + sender;
+
+            // Si es el bot, usamos Markdown
+            if (sender === 'bot') {
+                // Convertir Markdown a HTML
+                message.innerHTML = marked.parse(text);
+
+                // Si hay datos para gráfico, creamos el canvas
+                if (chartData) {
+                    const canvasId = 'chart-' + Date.now();
+                    const chartContainer = document.createElement('div');
+                    chartContainer.className = 'chart-container';
+                    chartContainer.innerHTML = `<canvas id="${canvasId}"></canvas>`;
+                    message.appendChild(chartContainer);
+
+                    // Esperar a que el elemento esté en el DOM para renderizar
+                    setTimeout(() => {
+                        renderChart(canvasId, chartData);
+                    }, 100);
+                }
+            } else {
+                message.innerText = text;
+            }
+
+            chat.appendChild(message);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function renderChart(canvasId, data) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+
+            new Chart(ctx, {
+                type: data.type || 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: data.label,
+                        data: data.data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#fff'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#fff'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- CÓDIGO DEL ENTER EN SU LUGAR CORRECTO (SE EJECUTA UNA SOLA VEZ) ---
+        const inputPregunta = document.getElementById('pregunta');
+        inputPregunta.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+        // --- FIN DEL CÓDIGO DEL ENTER ---
+
+        // --- FUNCIÓN DE LOGOUT ---
+        function logout() {
+            window.location.href = '/logout';
+        }
+
+    </script>
+
+</body>
+
+</html>

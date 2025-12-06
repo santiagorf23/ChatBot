@@ -1,0 +1,48 @@
+DOCUMENTO DE SOPORTE - LOS ARTIFICIALES
+
+Bienvenido al sistema de soporte de Los Artificiales.
+
+PREGUNTAS FRECUENTES:
+
+1. ¿Cómo resetear mi contraseña?
+Para resetear tu contraseña, ve a la página de login y haz clic en "Olvidé mi contraseña". 
+Recibirás un correo con instrucciones para crear una nueva contraseña.
+
+2. ¿Cómo contactar con soporte técnico?
+Puedes contactar con soporte técnico a través de:
+- Email: soporte@losartificiales.com
+- Teléfono: +1 (555) 123-4567
+- Chat en vivo: Disponible de Lunes a Viernes, 9AM - 6PM
+
+3. ¿Cómo actualizar mi perfil?
+Para actualizar tu perfil:
+1. Inicia sesión en tu cuenta
+2. Ve a "Mi Perfil" en el menú superior
+3. Haz clic en "Editar Perfil"
+4. Actualiza la información necesaria
+5. Guarda los cambios
+
+4. ¿Qué navegadores son compatibles?
+Nuestro sistema es compatible con:
+- Google Chrome (versión 90+)
+- Mozilla Firefox (versión 88+)
+- Microsoft Edge (versión 90+)
+- Safari (versión 14+)
+
+5. ¿Cómo reportar un problema?
+Para reportar un problema:
+1. Ve a la sección "Ayuda"
+2. Selecciona "Reportar Problema"
+3. Describe el problema en detalle
+4. Adjunta capturas de pantalla si es posible
+5. Envía el reporte
+
+POLÍTICAS:
+
+- Todos los usuarios deben mantener sus credenciales seguras
+- No compartir contraseñas con terceros
+- Reportar cualquier actividad sospechosa inmediatamente
+- Respetar las políticas de uso aceptable
+
+CONTACTO:
+Para más información, visita nuestra página web o contacta con nuestro equipo de soporte.

@@ -1,0 +1,12 @@
+flask
+groq
+scikit-learn
+pypdf2
+python-dotenv
+Flask-CORS
+pandas
+requests
+psutil
+matplotlib
+seaborn
+statistics
