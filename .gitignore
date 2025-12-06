@@ -1,4 +1,15 @@
-.venv
+# Variables de entorno
 .env
-/uploads
-/presentacion
+
+# Entorno virtual
+/.venv
+
+# Archivos de usuario
+chatbot/uploads
+docs/presentacion
+docs/data_limpia
+
+# Jupyter Notebooks (archivos que quieres ignorar específicamente de la raíz)
+data_graficos.ipynb
+documento_soporte.txt
+EXPLICACION_CHATBOT_EXPOSICION.txt
